@@ -1,0 +1,102 @@
+.login2{
+    background: url(../images/imagen_login.png) center no-repeat !important;
+}
+
+.content {
+    min-height: 300px;
+}
+
+.row.botonera {
+    margin-bottom: 20px;
+    right: 0;
+    position: relative;
+}
+
+.row.botonera a{
+    position: relative;
+    right: 20%;
+    float: right;
+    margin-left: 10px;
+}
+
+.row.botonera_form {
+    margin-bottom: 40px !important;
+    right: 0;
+    position: relative;
+    top: 10px;
+}
+
+.row.botonera_form a{
+    position: relative;
+    right: 40%;
+    float: right;
+    margin-left: 10px;
+}
+
+.row img.avatar_inter{
+    height: 180px;
+    width: 200px;
+    float: left;
+    margin: 0 0 30px 0;
+    border-radius: 10%;
+}
+
+.boton_alert{
+    margin-left: 14%;
+    width: 78%;
+}
+
+.boton_alert a{
+    margin-bottom: 10px;
+}
+
+.deplegar{
+    cursor:pointer;
+    font-size: 2em;
+}
+
+.detalle_tabla{
+    border: 2px solid #55A2A6;
+}
+
+.detalle_tabla th{
+    background-color: #151515;
+    color: white;
+    padding-left: 10px;
+}
+
+
+/*
+* Estilos para los Tabs 
+*/
+
+.ui-tabs-vertical { width: 100%; }
+.ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+.ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+.ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
+.ui-tabs-vertical .ui-tabs-panel { padding: 1em; float: right; width: 80%;}
+.ui-widget-header { border: 0px solid #aaaaaa !important; background: 50% 50% repeat-x !important;}
+
+
+@media only screen and (max-width: 450px) { 
+    .row.botonera_form a{    
+        right: 30%;        
+    }
+}
+
+@media only screen and (max-width: 340px) { 
+    .row.botonera_form a{    
+        right: 17%;        
+    }
+    
+    .boton_alert{
+        margin-left: 25%;
+        width: 50%;
+    }
+}
+
+@media only screen and (max-width: 760px) { 
+    .ui-tabs-vertical .ui-tabs-panel { padding: 1em; width: 100%;}
+    .ui-tabs-vertical .ui-tabs-nav { width: 100%; }
+}

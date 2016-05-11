@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 
@@ -31,3 +31,11 @@ Route::group(['prefix' => 'api', 'namespace' => 'API'], function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function() {
+    Route::resource('users', 'UserController');
+	Route::get('users/{id}/destroy',[
+		'uses' 	=> 'UserController@destroy',
+		'as'	=> 'admin.users.destroy'
+		]);
+});
