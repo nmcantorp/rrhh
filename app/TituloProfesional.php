@@ -4,26 +4,26 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AsignacionLaboral extends Model
+class TituloProfesional extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'asignacion_laboral';
+    protected $table = 'titulos_profesionales';
 
     /**
     * The database primary key value.
     *
     * @var string
     */
-    protected $primaryKey = 'id_asignacion_lab';
+    protected $primaryKey = 'id_titulo_profesional';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['id_asignacion_lab','id_control_contrato','id_cargo','id_tipo_departamento','activo','id_sucursal','fecha_ini','fecha_fin','id_persona'];
+    protected $fillable = ['id_titulo_profesional','id_area_conocimiento','titulo_profesional','desc_titulo_profesional','fecha_registro','activo'];
 }

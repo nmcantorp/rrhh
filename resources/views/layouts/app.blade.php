@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/skins/blue.css') }}" >
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" >
+    <link rel="stylesheet" href="{{ asset('plugins/chosen/chosen.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('plugins/jquery-ui-1.11.4.custom/jquery-ui.css') }}" type="text/css" />
+    @yield('add_stylesheet')
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -28,7 +31,7 @@
     </style>
 </head>
 <body id="app-layout">
-    <nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0 !important;background-color: white !important;">
+    <nav class="navbar navbar-inverse navbar-static-top" style="margin-bottom: 0 !important;">
         <div class="container">
             <div class="navbar-header">
 
@@ -49,8 +52,8 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <a href="{{ url('/') }}">
-                        <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt="Responsive image" style="width:22%">
+                    <a href="{{ url('/home') }}">
+                        <img src="{{ asset('images/logo.png') }}" class="img-responsive" alt="Responsive image" style="width:22%; background-color: white !important;border-radius: 10px 0;">
                     </a>
                 </ul>
 
@@ -61,9 +64,9 @@
                         <!-- <li><a href="{{ url('/login') }}">Login</a></li> -->
                         <li><a href="{{ url('/register') }}">Register</a></li>
                     @else
-                        <li><a href="{{ url('/home') }}">Home</a></li>
+                        <li><a href="{{ url('/home') }}" style="color:#fff !important;">Home</a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff !important;">
                                 Administraci&oacute;n <span class="caret"></span>
                             </a>
 
@@ -73,7 +76,7 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff !important;">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
@@ -141,6 +144,9 @@
     <!-- JavaScripts -->
     <script src="{{ asset('plugins/jquery/js/jquery-2.2.3.js') }}" ></script>
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
+    <script src="{{ asset('plugins/jquery-ui-1.11.4.custom/jquery-ui.js') }}"></script>
+    <script src="{{ asset('plugins/chosen/chosen.jquery.js') }}" ></script>
+    @yield('add_script')
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
