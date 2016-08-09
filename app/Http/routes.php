@@ -38,4 +38,9 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function() {
 		'uses' 	=> 'UserController@destroy',
 		'as'	=> 'admin.users.destroy'
 		]);
+
+	Route::get('users/{id}/step2',[
+		'uses' 	=> 'UserController@step2',
+		'as'	=> 'admin.users.step2'
+		]);
 });

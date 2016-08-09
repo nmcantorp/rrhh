@@ -1,11 +1,16 @@
 @extends('layouts.app')
 @section('subtitle', 'Lista de usuarios')
-
+@section('add_stylesheet');
+<link rel="stylesheet" href="{{ asset('css/sialen.css') }}" type="text/css" />
+@endsection()
 @section('content')
 <div class="row content">
     <div class="row">
     <hr>
 		{{ $personas->Render() }}
+		<div class="btn-group" role="group" aria-label="...">
+		  <a href=" {{ route('admin.users.create') }} " class="btn btn-default">Nuevo Usuario</a>
+		</div>
 	    <table class="table table-bordered table-hover">
     		<tr>
 				<th colspan="" rowspan="" headers="" scope="">D.N.I.</th>

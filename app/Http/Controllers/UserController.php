@@ -79,4 +79,28 @@ class UserController extends Controller
     							->with('educa_emp',$educa_emp)
     							;
     }
+
+    public function create(){
+
+        $ciudad = Ciudad::orderBy('nombre_ciudad','ASC')->lists('nombre_ciudad', 'id_ciudad');
+
+        return view('admin.create')->with('ciudad',$ciudad);
+    }
+
+    public function store(Request $request)
+    {
+        $persona = new Persona($request->all());
+        $ciudad  = Ciudad::find($request->all()['ciudad']); 
+        $persona->nombre_completo = $persona->primer_nom." ".$persona->segundo_nom." ".$persona->primer_ape." ".$persona->segundo_ape;
+        $persona->id_ciudad = $ciudad->id_ciudad;
+        $persona->id_departamento = $ciudad->id_departamento;
+        $persona->save();
+
+        return redirect()->route('admin.users.step2', [$persona->id_persona]);
+    }
+
+    public function step2($id_persona)
+    {
+        return view('admin.step2')->with('persona', $id_persona);
+    }
 }

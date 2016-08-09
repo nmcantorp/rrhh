@@ -1,3 +1,8 @@
+.btn-group{
+    float: right;
+    margin-bottom: 10px;
+}
+
 .login2{
     background: url(../images/imagen_login.png) center no-repeat !important;
 }
