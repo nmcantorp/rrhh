@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('subtitle', 'Lista de usuarios')
-@section('add_stylesheet');
+@section('add_stylesheet')
 <link rel="stylesheet" href="{{ asset('css/sialen.css') }}" type="text/css" />
 @endsection()
 @section('content')

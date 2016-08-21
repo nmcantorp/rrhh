@@ -224,7 +224,7 @@
 		                                    </div>
 		                                    <div class="six columns">
 		                                    	{{ Form::label('parentesco', 'Parentesco')}} 	                                    	                   
-		                        				{{ Form::text('parentesco', (is_null($referencia->parentesco)?'No Aplica':$referencia->tipo_referencias ) , ['class'=>'smoothborder', 'required', 'placeholder'=>'Parentesco'] ) }}
+		                        				{{ Form::text('parentesco', (is_null($referencia->parentesco)?'No Aplica':$referencia->parentesco ) , ['class'=>'smoothborder', 'required', 'placeholder'=>'Parentesco'] ) }}
 		                                    </div>
 		                                    <div class="four columns">
 		                                    	{{ Form::label('dir_referencia', 'Dirección')}} 	                                    	                   
@@ -300,8 +300,8 @@
 	                		@endif
 	                	</div>
 	                	<div id="tabs-6">
-	                		<h2>Educación Formal</h2>
-	                		@if (count($educa_formal)<=0)
+	                		<h2>Educación Empresa</h2>
+	                		@if (count($educa_emp)<=0)
 	                			<p>
                                     <hr>
                                     <div class="row">

@@ -1,3 +1,7 @@
+button.removeButton:first-child   {
+    display: none !important;
+}
+
 .btn-group{
     float: right;
     margin-bottom: 10px;
