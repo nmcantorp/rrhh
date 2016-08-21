@@ -39,8 +39,8 @@
 						  </button>
 						  <ul class="dropdown-menu">
 						    <li><a href=" {{ route('admin.users.show', $element->id_persona ) }} ">Ver Detalle</a></li>
-						    <li><a href="#">Another action</a></li>
-						    <li><a href="#">Something else here</a></li>						    
+						    {{-- <li><a href="#">Another action</a></li>
+						    <li><a href="#">Something else here</a></li> --}}						    
 						  </ul>
 						</div>
 					</td>

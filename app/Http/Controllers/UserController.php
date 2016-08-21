@@ -20,7 +20,7 @@ class UserController extends Controller
 {
     public function index()
     {
-    	$personas = Persona::orderBy('id_persona','ASC')->paginate(5);
+    	$personas = Persona::orderBy('id_persona','ASC')->paginate(10);
 
     	return view('admin.index')->with('personas', $personas);
     }
@@ -61,7 +61,7 @@ class UserController extends Controller
 									 'B.valor_definicion as parentesco',
 									 'A.valor_definicion as tipo_referencias')
 							->get();
-                            
+
 		/* Informacion del tab 5 -> Eduacion formal */
 		$educa_formal = DB::table('estudios_realzados')
 							->leftJoin('organizaciones', 'organizaciones.id_organizacion','=','estudios_realzados.id_organizacion')
