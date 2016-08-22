@@ -168,6 +168,7 @@ return [
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
         Appzcoder\CrudGenerator\CrudGeneratorServiceProvider::class,//Creacion de modelos https://packagist.org/packages/appzcoder/crud-generator
+        \InfyOm\GeneratorBuilder\GeneratorBuilderServiceProvider::class,
     ],
 
     /*
