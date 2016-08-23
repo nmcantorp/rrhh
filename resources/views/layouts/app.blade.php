@@ -67,12 +67,21 @@
                         <li><a href="{{ url('/home') }}" style="color:#fff !important;">Home</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff !important;">
+                                Configuraci&oacute;n <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('admin/paises') }}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>&nbsp;Paises</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="color:#fff !important;">
                                 Administraci&oacute;n <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('admin/users') }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Usuarios</a></li>
-                                <li><a href="{{ url('/logout') }}"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>&nbsp;Organizaciones</a></li>
+                                <li><a href="{{ url('admin/organizaciones') }}"><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>&nbsp;Organizaciones</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

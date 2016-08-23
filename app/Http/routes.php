@@ -56,8 +56,20 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function() {
 		'uses' 	=> 'UserController@step4save',
 		'as'	=> 'admin.users.step4store'
 		]);
-
+	/*Paises*/
 	Route::resource('paises', 'PaisesController');
+	Route::get('paises/destroy/{id}',[
+		'uses' 	=> 'PaisesController@destroy',
+		'as'	=> 'admin.paises.destroy'
+		]);
+
+	/*Organizaciones*/
+	Route::resource('organizaciones', 'Admin\OrganizacionesController');
+	Route::get('admin/organizaciones/{organizaciones}',[
+		'as'=> 'admin.organizaciones.destroy', 
+		'uses' => 'Admin\OrganizacionesController@destroy'
+		]);
+
 });
 
 /* route para ajax de parentescos */
@@ -81,3 +93,13 @@ Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorB
 Route::get('field_template', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@fieldTemplate');
 
 Route::post('generator_builder/generate', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@generate');
+
+/*Route::get('admin/organizaciones', ['as'=> 'admin.organizaciones.index', 'uses' => 'Admin\OrganizacionesController@index']);
+Route::post('admin/organizaciones', ['as'=> 'admin.organizaciones.store', 'uses' => 'Admin\OrganizacionesController@store']);
+Route::get('admin/organizaciones/create', ['as'=> 'admin.organizaciones.create', 'uses' => 'Admin\OrganizacionesController@create']);
+Route::put('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.update', 'uses' => 'Admin\OrganizacionesController@update']);
+Route::patch('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.update', 'uses' => 'Admin\OrganizacionesController@update']);
+Route::delete('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.destroy', 'uses' => 'Admin\OrganizacionesController@destroy']);
+Route::get('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.show', 'uses' => 'Admin\OrganizacionesController@show']);
+
+Route::get('admin/organizaciones/{organizaciones}/edit', ['as'=> 'admin.organizaciones.edit', 'uses' => 'Admin\OrganizacionesController@edit']);*/
