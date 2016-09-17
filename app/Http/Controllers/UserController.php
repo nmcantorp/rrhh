@@ -205,4 +205,56 @@ class UserController extends Controller
                                         ->get();
         return view('ajax.parents')->with('parents', $parents);
     }
+
+    public function edit($id)
+    {
+        $user       = Persona::find($id);
+        $ciudad     = Ciudad::orderBy('nombre_ciudad','ASC')->lists('nombre_ciudad', 'id_ciudad');
+        return view('admin.edit')->with('user', $user)
+                                ->with('ciudad',$ciudad);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = Persona::find($id);
+        $user->primer_nom = $request->primer_nom;
+        $user->segundo_nom = $request->segundo_nom;
+        $user->primer_ape = $request->primer_ape;
+        $user->segundo_ape = $request->segundo_ape;
+        $user->doc_identidad = $request->doc_identidad;
+        $user->fecha_nac = $request->fecha_nac;
+        $user->genero = $request->genero;
+        $user->direccion = $request->direccion;
+        $user->id_ciudad = $request->ciudad;
+        $user->email = $request->email;
+        $user->telefono = $request->telefono;
+        $user->celular = $request->celular;
+        $user->save();
+        return redirect()->route('admin.users.editstep2', [$id]);
+
+    }
+
+    public function editStep2($id)
+    {
+        $organizacion = DB::table('historial_laboral')
+                            ->join('organizaciones', 'organizaciones.id_organizacion', '=', 'historial_laboral.id_organizacion' )
+                            ->join('cargos', 'cargos.id_cargo', '=', 'historial_laboral.id_cargo' )
+                            ->where('historial_laboral.id_persona', $id)
+                            ->orderby('historial_laboral.fecha_ingreso','desc')
+                            ->orderby('historial_laboral.fecha_retiro','desc')
+                            ->get();
+
+        $user    = Persona::find($id);
+        $cargo   = Cargo::orderBy('descripcion_cargo','ASC')->lists('descripcion_cargo', 'id_cargo');
+        $empresa = Organizacion::orderBy('nombre_empresa','ASC')->lists('nombre_empresa', 'id_organizacion');
+        return view('admin.editstep2')->with('persona', $id)
+                                ->with('cargo', $cargo)
+                                ->with('empresa', $empresa)
+                                ->with('organizacion', $organizacion);
+    }
+
+    public function updateStep2(Request $request, $id)
+    {
+
+    }
 }

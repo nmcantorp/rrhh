@@ -32,6 +32,16 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function() {
 		'as'	=> 'admin.users.step2'
 		]);
 
+	Route::get('users/{id}/editStep2',[
+		'uses' 	=> 'UserController@editStep2',
+		'as'	=> 'admin.users.editstep2'
+		]);
+
+	Route::put('users/{id}',[
+		'uses' 	=> 'UserController@updateStep2',
+		'as'	=> 'admin.users.updatestep2'
+		]);
+
 	Route::post('users/savestep2',[
 		'uses' 	=> 'UserController@step2save',
 		'as'	=> 'admin.users.step2store'
