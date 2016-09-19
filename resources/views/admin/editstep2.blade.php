@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('subtitle', 'Experiencia Laboral')
+@section('subtitle', 'Edicion Experiencia Laboral')
 @section('add_stylesheet')
 <link rel="stylesheet" href="{{ asset('css/sialen.css') }}" type="text/css" />
 @endsection()
@@ -9,8 +9,9 @@
 <div class="row content">
 	{{ Form::hidden('id_persona', $persona) }}
 @foreach ($organizacion as $organizaciones)
-<div id="details">	
-	<hr>                               
+<div id="details">
+	<hr>
+	<input type="hidden" value="{{ $organizaciones->id_historial_lab }}" id="id_historia[]" name="id_historia[]">
 	<div class="row">
 	    <div class="six columns">
 	    	{{ Form::label('empresa', 'Nom. Empresa')}} 	                                    	                   

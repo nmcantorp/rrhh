@@ -37,10 +37,30 @@ Route::group(['prefix' => 'admin', 'middleware'=>'auth'], function() {
 		'as'	=> 'admin.users.editstep2'
 		]);
 
-	Route::put('users/{id}',[
-		'uses' 	=> 'UserController@updateStep2',
-		'as'	=> 'admin.users.updatestep2'
-		]);
+    Route::match(['put', 'patch'],'users/{id}/updatestep2',[
+        'uses' 	=> 'UserController@updateStep2',
+        'as'	=> 'admin.users.updatestep2'
+    ]);
+
+    Route::get('users/{id}/editStep3',[
+        'uses' 	=> 'UserController@editStep3',
+        'as'	=> 'admin.users.editstep3'
+    ]);
+
+    Route::match(['put', 'patch'],'users/{id}/updatestep3',[
+        'uses' 	=> 'UserController@updateStep3',
+        'as'	=> 'admin.users.updatestep3'
+    ]);
+
+    Route::get('users/{id}/editStep4',[
+        'uses' 	=> 'UserController@editStep4',
+        'as'	=> 'admin.users.editstep4'
+    ]);
+
+    Route::match(['put', 'patch'],'users/{id}/updatestep4',[
+        'uses' 	=> 'UserController@updateStep4',
+        'as'	=> 'admin.users.updatestep4'
+    ]);
 
 	Route::post('users/savestep2',[
 		'uses' 	=> 'UserController@step2save',

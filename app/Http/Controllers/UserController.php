@@ -26,7 +26,7 @@ class UserController extends Controller
     }
 
     public function show($id)
-    {
+    {   
     	$persona 	= Persona::find($id);
     	$ciudad 	= Ciudad::orderBy('nombre_ciudad','ASC')->lists('nombre_ciudad', 'id_ciudad');
 
@@ -255,6 +255,177 @@ class UserController extends Controller
 
     public function updateStep2(Request $request, $id)
     {
+        $organizacion = DB::table('historial_laboral')
+            ->join('organizaciones', 'organizaciones.id_organizacion', '=', 'historial_laboral.id_organizacion' )
+            ->join('cargos', 'cargos.id_cargo', '=', 'historial_laboral.id_cargo' )
+            ->where('historial_laboral.id_persona', $id)
+            ->orderby('historial_laboral.fecha_ingreso','desc')
+            ->orderby('historial_laboral.fecha_retiro','desc')
+            ->get();
 
+        for ($i=0; $i < count($request->empresa); $i++) {
+            if(isset($request->id_historia[$i]) && !empty($request->id_historia[$i]) && $request->id_historia[$i] != '' )
+            {
+                $historiaLab = HistorialLaboral::find($request->id_historia[$i]);
+                $historialArray[] = $request->id_historia[$i];
+            }else{
+                $historiaLab = new HistorialLaboral($request->all());
+            }
+            $historiaLab->id_organizacion   = $request->empresa[$i];
+            $historiaLab->id_cargo          = $request->cargo[$i];
+            $historiaLab->fecha_ingreso     = $request->ingreso[$i];
+            $historiaLab->fecha_retiro      = $request->retiro[$i];
+            $historiaLab->jefe_inmediato    = $request->jefe[$i];
+            $historiaLab->telcontacto       = $request->tel[$i];
+            $historiaLab->extension         = $request->ext[$i];
+            $historiaLab->save();
+        }
+        /**
+         * Eliminando registros borrados en la actualización
+         */
+        for ($i=0; $i<count($organizacion);$i++)
+        {
+            if(!in_array($organizacion[$i]->id_historial_lab, $historialArray))
+            {
+                $historia = HistorialLaboral::find($organizacion[$i]->id_historial_lab);
+                $historia->delete();
+            }
+        }
+        return redirect()->route('admin.users.editstep3', [$id]);
+    }
+
+    public function editStep3($id)
+    {
+        $referencias = DB::table('referencias_personales')
+            ->leftJoin('valores_definiciones as A', 'A.id_valor_def','=','referencias_personales.tipo_referencia')
+            ->leftJoin('valores_definiciones as B', 'B.id_valor_def','=','referencias_personales.id_tipo_parentesco')
+            ->where('referencias_personales.id_persona', $id)
+            ->select('referencias_personales.*',
+                'B.valor_definicion as parentesco',
+                'A.valor_definicion as tipo_referencias')
+            ->get();
+
+        $parents = DB::select('select valor_definicion, id_valor_def from valores_definiciones where id_tipo_definicion in (13,14)');
+        for ($i=0; $i<count($parents);$i++)
+        {
+            $parent[$parents[$i]->id_valor_def] = $parents[$i]->valor_definicion;
+        }
+
+        $cargo = Cargo::orderBy('descripcion_cargo','ASC')->lists('descripcion_cargo', 'id_cargo');
+        $empresa = Organizacion::orderBy('nombre_empresa','ASC')->lists('nombre_empresa', 'id_organizacion');
+        return view('admin.editstep3')->with('persona', $id)
+            ->with('parents', $parent)
+            ->with('referencias', $referencias)
+            ->with('cargo', $cargo)
+            ->with('empresa', $empresa);
+    }
+
+    public function updateStep3(Request $request, $id)
+    {
+        $referencias = DB::table('referencias_personales')
+            ->leftJoin('valores_definiciones as A', 'A.id_valor_def','=','referencias_personales.tipo_referencia')
+            ->leftJoin('valores_definiciones as B', 'B.id_valor_def','=','referencias_personales.id_tipo_parentesco')
+            ->where('referencias_personales.id_persona', $id)
+            ->select('referencias_personales.*',
+                'B.valor_definicion as parentesco',
+                'A.valor_definicion as tipo_referencias')
+            ->get();
+
+        for ($i=0; $i < count($request->nombre_ref); $i++) {
+            if(isset($request->id_referencia[$i]) && !empty($request->id_referencia[$i]) && $request->id_referencia[$i] != '' )
+            {
+                $referenciaLab = ReferenciaPersonal::find($request->id_referencia[$i]);
+                $referenciaArray[] = $request->id_referencia[$i];
+            }else{
+                $referenciaLab = new ReferenciaPersonal($request->all());
+            }
+            $referenciaLab->nombre_ref   = $request->nombre_ref[$i];
+            $referenciaLab->telefono_ref = $request->tel[$i];
+            $referenciaLab->celular_ref  = $request->cel[$i];
+            $referenciaLab->tipo_referencia      = $request->tipo_ref[$i];
+            $referenciaLab->direccion_ref= $request->direccion[$i];
+            $referenciaLab->id_tipo_parentesco= $request->parentesco[$i];
+            $referenciaLab->save();
+        }
+        /**
+         * Eliminando registros borrados en la actualización
+         */
+        for ($i=0; $i<count($referencias);$i++)
+        {
+            if(!in_array($referencias[$i]->id_ref_personal, $referenciaArray))
+            {
+                $referencia = ReferenciaPersonal::find($referencias[$i]->id_ref_personal);
+                $referencia->delete();
+            }
+        }
+        return redirect()->route('admin.users.editstep4', [$id]);
+    }
+
+    public function editStep4($id)
+    {
+        $educa_formal = DB::table('estudios_realzados')
+            ->leftJoin('organizaciones', 'organizaciones.id_organizacion','=','estudios_realzados.id_organizacion')
+            ->leftJoin('titulos_profesionales', 'titulos_profesionales.id_titulo_profesional','=','estudios_realzados.id_titulo_profesional')
+            ->leftJoin('valores_definiciones', 'valores_definiciones.id_valor_def','=','estudios_realzados.id_tipo_formacion')
+            ->where('estudios_realzados.id_persona', $id)
+            ->select('estudios_realzados.*',
+                'valores_definiciones.*',
+                'organizaciones.*')
+            ->get();
+
+        $tipo_formacion = ValorDefinicion::where('tipo_valor_def','=','TIPO_FORMACION')
+            ->lists('valor_definicion', 'id_valor_def');
+
+        $area_conocimiento = ValorDefinicion::where('tipo_valor_def','=','AREAS_CONOCIMIENTO')
+            ->lists('valor_definicion', 'id_valor_def');
+
+        $cargo = Cargo::orderBy('descripcion_cargo','ASC')->lists('descripcion_cargo', 'id_cargo');
+        $institucion = Organizacion::orderBy('nombre_empresa','ASC')
+            ->where('id_sec_financiero','=','17')
+            ->lists('nombre_empresa', 'id_organizacion');
+        return view('admin.editstep4')->with('persona', $id)
+            ->with('educacion', $educa_formal)
+            ->with('tipo_formacion', $tipo_formacion)
+            ->with('area_conocimiento', $area_conocimiento)
+            ->with('institucion', $institucion);
+    }
+
+    public function updateStep4(Request $request, $id)
+    {
+        $educa_formal = DB::table('estudios_realzados')
+            ->leftJoin('organizaciones', 'organizaciones.id_organizacion','=','estudios_realzados.id_organizacion')
+            ->leftJoin('titulos_profesionales', 'titulos_profesionales.id_titulo_profesional','=','estudios_realzados.id_titulo_profesional')
+            ->leftJoin('valores_definiciones', 'valores_definiciones.id_valor_def','=','estudios_realzados.id_tipo_formacion')
+            ->where('estudios_realzados.id_persona', $id)
+            ->get();
+
+        for ($i=0; $i < count($request->nombre_inst); $i++) {
+            if(isset($request->id_formacion[$i]) && !empty($request->id_formacion[$i]) && $request->id_formacion[$i] != '' )
+            {
+                $estudioRealizado = EstudioRealzado::find($request->id_formacion[$i]);
+                $estudiosArray[] = $request->id_formacion[$i];
+            }else{
+                $estudioRealizado = new EstudioRealzado($request->all());
+            }
+            $estudioRealizado->id_organizacion      = $request->nombre_inst[$i];
+            $estudioRealizado->id_tipo_formacion    = $request->tipo_for[$i];
+            $estudioRealizado->anyo_egresado        = $request->anio[$i];
+            $estudioRealizado->titulo_obtenido      = $request->titulo[$i];
+            $estudioRealizado->id_titulo_profesional= $request->titulo_obt[$i];
+
+            $estudioRealizado->save();
+        }
+        /**
+         * Eliminando registros borrados en la actualización
+         */
+        for ($i=0; $i<count($educa_formal);$i++)
+        {
+            if(!in_array($educa_formal[$i]->id_estudio_realizado, $estudiosArray))
+            {
+                $educacion = EstudioRealzado::find($educa_formal[$i]->id_estudio_realizado);
+                $educacion->delete();
+            }
+        }
+        return redirect()->route('admin.users.show', [$id]);
     }
 }

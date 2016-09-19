@@ -61,6 +61,8 @@ var botones = (function(){
         element.each(function () {
             $(this).on('click', function () {
                 $(this).parents('#details').clone().appendTo('.content');
+                $('.content div#details:last input').val(null);
+                $('.content div#details:last select').val('');
                 botones.addEvent();
                 botones.removeEvent();
                 botones.addEventParent();
