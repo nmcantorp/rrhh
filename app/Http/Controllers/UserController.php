@@ -15,6 +15,7 @@ use App\Valordefinicion;
 use App\ReferenciaPersonal;
 use App\TituloProfesional;
 use App\EstudioRealzado;
+use App\Http\Requests\PersonaRequest;
 
 class UserController extends Controller
 {
@@ -94,7 +95,7 @@ class UserController extends Controller
         return view('admin.create')->with('ciudad',$ciudad);
     }
 
-    public function store(Request $request)
+    public function store(PersonaRequest $request)
     {
         $persona = new Persona($request->all());
         $ciudad  = Ciudad::find($request->all()['ciudad']); 
