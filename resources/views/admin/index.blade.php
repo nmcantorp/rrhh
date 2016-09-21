@@ -6,7 +6,16 @@
 @section('content')
 <div class="row content">
     <div class="row">
+		<!-- Buscador -->
+		{{ Form::open(['route'=>'admin.users.index', 'method' => 'GET', 'class'=>'navbar-form pull-right']) }}
+		<div class="form-group">
+			{{ Form::text('buscar', null, ['class'=>'form-control', 'placeholder'=>'Buscar Persona', 'style'=>'margin: 0 !important;']) }}
+			{{ Form::button('Buscar',['class'=>'btn btn-default', 'type'=>'submit']) }}
+		</div>
+		{{ Form::close() }}
+	<!-- fin buscador -->
     <hr>
+
 		{{ $personas->Render() }}
 		<div class="btn-group" role="group" aria-label="...">
 		  <a href=" {{ route('admin.users.create') }} " class="btn btn-default">Nuevo Usuario</a>

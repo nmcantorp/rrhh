@@ -19,10 +19,9 @@ use App\Http\Requests\PersonaRequest;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    	$personas = Persona::orderBy('id_persona','ASC')->paginate(10);
-
+    	$personas = Persona::search($request->get('buscar'))->orderBy('id_persona','ASC')->paginate(10);
     	return view('admin.index')->with('personas', $personas);
     }
 
