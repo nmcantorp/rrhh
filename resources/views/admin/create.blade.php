@@ -1,11 +1,16 @@
 @extends('layouts.app')
 @section('subtitle', 'Usuario Nuevo')
 @section('add_stylesheet')
-<link rel="stylesheet" href="{{ asset('css/sialen.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/sialen.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/drop.css') }}" type="text/css" />
+
 @endsection()
 
 @section('add_script')
 <script src="{{ asset('js/funciones_especificas/personas.js') }}" type="text/javascript" charset="utf-8" async></script>
+
+<script src="{{ asset('js/funciones_especificas/drop.js') }}" type="text/javascript" charset="utf-8" async></script>
+
 @endsection()
 
 @section('content')
@@ -20,7 +25,7 @@
             </ul>
         </div>
     @endif
-{{ Form::open(['route' => 'admin.users.store', 'method'=>'POST', 'files' => true]) }}
+{{ Form::open(['route' => 'admin.users.store', 'method'=>'POST', 'files' => true, 'class' => 'dropzone', 'id'=>'real-dropzone']) }}
 <div class="row content">
 	<div class="row">
     <hr>
@@ -32,11 +37,20 @@
 	    	<fieldset>
                 <legend>Datos Personales</legend>
                 <div class="row">
-                    <div class="foto three columns">
-                    	
-                        <img src="{{ asset('images/gravatar.png') }}" alt="" width="80" class="avatar_inter"/>
+                    <div class="foto three columns" >
 
+
+                       <!--<img src="{{ asset('images/gravatar.png') }}" alt="" width="80" class="avatar_inter"/>-->
+                        <div id="dropzone">
+                            <div>Arratra o da clic </div>
+                            {{  Form::file('avatar', ["accept"=>"image/png, application/pdf" ]) }}
+                            <!--<input type="file" accept="image/png, application/pdf" name="avatar" id="avatar"/>-->
+                        </div>
+                           <div class="dropzone" id="dropzoneFileUpload" style="display: none;">
+                               <input type="file" name="file" id="file" >
+                           </div>
                     </div>
+
                     <div class="four columns">
                     	{{ Form::label('primer_nom', 'Primer Nombre') }}
                         {{ Form::text('primer_nom', null,['class'=>'smoothborder', 'required', 'placeholder'=>'Primer Nombre'] ) }}
@@ -52,7 +66,7 @@
                     </div>
                     <div class="four columns">
                     	{{ Form::label('segundo_ape', 'Segundo Apellido') }}
-                        {{ Form::text('segundo_ape', null,['class'=>'smoothborder', 'required', 'placeholder'=>'Segundo Apellido'] ) }}                        
+                        {{ Form::text('segundo_ape', null,['class'=>'smoothborder', 'required', 'placeholder'=>'Segundo Apellido'] ) }}
                     </div>
                     <div class="three columns">
                     	{{ Form::label('doc_identidad', 'Documento de Identidad (D.N.I)') }}
@@ -102,4 +116,5 @@
     <input type="submit" name="submit" value="Guardar y Avanzar" class="btn btn-success" style="float: right;">
 </div>
 {{ Form::close() }}
+
 @endsection()

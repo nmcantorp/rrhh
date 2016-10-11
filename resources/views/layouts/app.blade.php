@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" >
     <link rel="stylesheet" href="{{ asset('plugins/chosen/chosen.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('plugins/jquery-ui-1.11.4.custom/jquery-ui.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('plugins/dropzone/dist/dropzone.css') }}" type="text/css" />
     @yield('add_stylesheet')
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
@@ -155,6 +156,7 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}" ></script>
     <script src="{{ asset('plugins/jquery-ui-1.11.4.custom/jquery-ui.js') }}"></script>
     <script src="{{ asset('plugins/chosen/chosen.jquery.js') }}" ></script>
+    <script src="{{ asset('plugins/dropzone/dist/dropzone.js') }}"></script>
     @yield('add_script')
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>

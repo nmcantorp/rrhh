@@ -16,6 +16,7 @@ use App\ReferenciaPersonal;
 use App\TituloProfesional;
 use App\EstudioRealzado;
 use App\Http\Requests\PersonaRequest;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -96,11 +97,25 @@ class UserController extends Controller
 
     public function store(PersonaRequest $request)
     {
+        $file = $request->file('avatar');
+        $extension = explode('.',$file->getClientOriginalName());
+
+        $extension = $extension[count($extension)-1];
+        $date = Carbon::now()->toDateString();
+
         $persona = new Persona($request->all());
-        $ciudad  = Ciudad::find($request->all()['ciudad']); 
+        $ciudad  = Ciudad::find($request->all()['ciudad']);
         $persona->nombre_completo = $persona->primer_nom." ".$persona->segundo_nom." ".$persona->primer_ape." ".$persona->segundo_ape;
         $persona->id_ciudad = $ciudad->id_ciudad;
         $persona->id_departamento = $ciudad->id_departamento;
+        /* Se cambia el nombre del archivo y se mueve a la carpeta Avatar */
+        $nombre_new = $persona->doc_identidad."_".$date.".".$extension;
+
+        $destinationPath = public_path()."/images/avatar";
+
+        $file->move($destinationPath, $nombre_new);
+
+        $persona->foto = $nombre_new;
         $persona->save();
 
         return redirect()->route('admin.users.step2', [$persona->id_persona]);
@@ -243,6 +258,10 @@ class UserController extends Controller
                             ->orderby('historial_laboral.fecha_ingreso','desc')
                             ->orderby('historial_laboral.fecha_retiro','desc')
                             ->get();
+        if(count($organizacion)<=0)
+        {
+            return redirect()->route('admin.users.step2', [$id]);
+        }
 
         $user    = Persona::find($id);
         $cargo   = Cargo::orderBy('descripcion_cargo','ASC')->lists('descripcion_cargo', 'id_cargo');

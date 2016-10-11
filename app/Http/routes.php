@@ -117,6 +117,7 @@ Route::group(['prefix' => 'api', 'namespace' => 'API'], function () {
     });
 });
 
+Route::resource('file', 'FileController');
 
 Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@builder');
 
@@ -124,12 +125,7 @@ Route::get('field_template', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuil
 
 Route::post('generator_builder/generate', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@generate');
 
-/*Route::get('admin/organizaciones', ['as'=> 'admin.organizaciones.index', 'uses' => 'Admin\OrganizacionesController@index']);
-Route::post('admin/organizaciones', ['as'=> 'admin.organizaciones.store', 'uses' => 'Admin\OrganizacionesController@store']);
-Route::get('admin/organizaciones/create', ['as'=> 'admin.organizaciones.create', 'uses' => 'Admin\OrganizacionesController@create']);
-Route::put('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.update', 'uses' => 'Admin\OrganizacionesController@update']);
-Route::patch('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.update', 'uses' => 'Admin\OrganizacionesController@update']);
-Route::delete('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.destroy', 'uses' => 'Admin\OrganizacionesController@destroy']);
-Route::get('admin/organizaciones/{organizaciones}', ['as'=> 'admin.organizaciones.show', 'uses' => 'Admin\OrganizacionesController@show']);
-
-Route::get('admin/organizaciones/{organizaciones}/edit', ['as'=> 'admin.organizaciones.edit', 'uses' => 'Admin\OrganizacionesController@edit']);*/
+Route::get('/upload/{folder}/{width}x{height}/{image}', [
+        'as' => 'image.adaptiveResize',
+        'uses' => 'ImageController@adaptiveResize'
+        ]);

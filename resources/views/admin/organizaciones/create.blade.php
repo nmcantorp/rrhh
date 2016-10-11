@@ -1,19 +1,24 @@
 @extends('layouts.app')
-
+@section('subtitle', 'Creación de Organizaciones')
 @section('content')
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 class="pull-left">Create New Organizaciones</h1>
-        </div>
-    </div>
 
     @include('core-templates::common.errors')
 
-    <div class="row">
-        {!! Form::open(['route' => 'admin.organizaciones.store']) !!}
+    <div class="row content">
+        <div class="row">
+            <hr>
+            <a class="btn btn-danger pull-right" href="{{ route('admin.organizaciones.index') }}" role="button">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>&nbsp;Volver
+            </a>
+            <div class="twelve columns" >
+                <fieldset>
+                {!! Form::open(['route' => 'admin.organizaciones.store']) !!}
 
-            @include('admin.organizaciones.fields')
-
-        {!! Form::close() !!}
+                    @include('admin.organizaciones.fields')
+                </fieldset>
+                {!! Form::submit('Guardar', ['class' => 'btn btn-success', 'style'=>"float: right;"]) !!}
+                {!! Form::close() !!}
+            </div>
+        </div>
     </div>
 @endsection

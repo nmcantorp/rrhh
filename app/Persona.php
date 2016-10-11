@@ -12,7 +12,7 @@ class Persona extends Model
      *
      * @var string
      */
-    protected $table = 'Personas';
+    protected $table = 'personas';
 
     /**
     * The database primary key value.

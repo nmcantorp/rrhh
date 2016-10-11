@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
+use App\Organizacion;
 
 class OrganizacionesController extends InfyOmBaseController
 {
@@ -30,8 +31,7 @@ class OrganizacionesController extends InfyOmBaseController
      */
     public function index(Request $request)
     {
-        $this->organizacionesRepository->pushCriteria(new RequestCriteria($request));
-        $organizaciones = $this->organizacionesRepository->paginate(10);
+        $organizaciones = Organizacion::search($request->get('buscar'))->orderBy('nombre_empresa','ASC')->paginate(10);
 
         return view('admin.organizaciones.index')
             ->with('organizaciones', $organizaciones);
